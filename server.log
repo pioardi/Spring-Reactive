@@ -1,0 +1,84 @@
+16:58:02.220 [restartedMain] INFO  c.aardizio.SpringReactiveApplication  - Starting SpringReactiveApplication on MBPdiAlessandro.station with PID 16227 (/Users/alessandropioardizio/Documents/workspace/Spring-Reactive/target/classes started by alessandropioardizio in /Users/alessandropioardizio/Documents/workspace/Spring-Reactive)
+16:58:02.221 [restartedMain] INFO  c.aardizio.SpringReactiveApplication  - No active profile set, falling back to default profiles: default
+16:58:02.224 [restartedMain] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext  - Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5d9e494c: startup date [Tue May 22 16:58:02 CEST 2018]; root of context hierarchy
+16:58:02.602 [restartedMain] INFO  o.s.b.f.s.DefaultListableBeanFactory  - Overriding bean definition for bean 'cassandraTemplate' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=cassandraReactiveConfiguration; factoryMethodName=cassandraTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/aardizio/config/CassandraReactiveConfiguration.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration; factoryMethodName=cassandraTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/cassandra/CassandraDataAutoConfiguration.class]]
+16:58:02.636 [restartedMain] INFO  o.s.b.f.s.DefaultListableBeanFactory  - Overriding bean definition for bean 'reactiveCassandraTemplate' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=cassandraReactiveConfiguration; factoryMethodName=reactiveCassandraTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/aardizio/config/CassandraReactiveConfiguration.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveDataAutoConfiguration; factoryMethodName=reactiveCassandraTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/cassandra/CassandraReactiveDataAutoConfiguration.class]]
+16:58:02.692 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker  - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$7d1943d0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+16:58:02.740 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer  - Tomcat initialized with port(s): 8080 (http)
+16:58:02.741 [restartedMain] INFO  o.a.catalina.core.StandardService  - Starting service [Tomcat]
+16:58:02.742 [restartedMain] INFO  o.a.catalina.core.StandardEngine  - Starting Servlet Engine: Apache Tomcat/8.5.31
+16:58:02.752 [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]  - Initializing Spring embedded WebApplicationContext
+16:58:02.753 [localhost-startStop-1] INFO  o.s.web.context.ContextLoader  - Root WebApplicationContext: initialization completed in 529 ms
+16:58:02.838 [localhost-startStop-1] INFO  c.datastax.driver.core.ClockFactory  - Using native clock to generate timestamps.
+16:58:02.905 [localhost-startStop-1] INFO  c.d.d.c.p.DCAwareRoundRobinPolicy  - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+16:58:02.906 [localhost-startStop-1] INFO  com.datastax.driver.core.Cluster  - New Cassandra host localhost/127.0.0.1:9042 added
+16:58:02.972 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean  - Servlet dispatcherServlet mapped to [/]
+16:58:02.973 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'characterEncodingFilter' to: [/*]
+16:58:02.973 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+16:58:02.973 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+16:58:02.974 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'requestContextFilter' to: [/*]
+16:58:02.974 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'httpTraceFilter' to: [/*]
+16:58:02.974 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'webMvcMetricsFilter' to: [/*]
+16:58:36.794 [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping  - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+16:58:36.829 [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter  - Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5d9e494c: startup date [Tue May 22 16:58:02 CEST 2018]; root of context hierarchy
+16:58:36.835 [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping  - Mapped "{[/hotels/{id}],methods=[DELETE],consumes=[application/json],produces=[application/json]}" onto public void com.aardizio.resource.HotelController.delete(java.lang.String)
+16:58:36.836 [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping  - Mapped "{[/hotels],methods=[POST],consumes=[application/json],produces=[application/json]}" onto public reactor.core.publisher.Mono<com.aardizio.model.Hotels> com.aardizio.resource.HotelController.create(com.aardizio.model.Hotels)
+16:58:36.836 [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping  - Mapped "{[/hotels/{uuid}],methods=[GET],consumes=[application/json],produces=[application/json]}" onto public reactor.core.publisher.Mono<com.aardizio.model.Hotels> com.aardizio.resource.HotelController.search(java.lang.String)
+16:58:36.837 [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping  - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+16:58:36.838 [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping  - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+16:58:36.843 [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping  - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+16:58:36.843 [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping  - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+16:58:36.855 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration  - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+16:58:36.928 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer  - LiveReload server is running on port 35729
+16:58:36.931 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver  - Exposing 2 endpoint(s) beneath base path '/actuator'
+16:58:36.932 [restartedMain] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping  - Mapped "{[/actuator/health],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+16:58:36.933 [restartedMain] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping  - Mapped "{[/actuator/info],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map<java.lang.String, java.lang.String>)
+16:58:36.933 [restartedMain] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping  - Mapped "{[/actuator],methods=[GET],produces=[application/vnd.spring-boot.actuator.v2+json || application/json]}" onto protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.springframework.boot.actuate.endpoint.web.Link>> org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+16:58:36.944 [restartedMain] INFO  o.s.j.e.a.AnnotationMBeanExporter  - Registering beans for JMX exposure on startup
+16:58:36.948 [restartedMain] INFO  o.s.c.s.DefaultLifecycleProcessor  - Starting beans in phase 2147483547
+16:58:36.955 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer  - Tomcat started on port(s): 8080 (http) with context path ''
+16:58:36.956 [restartedMain] INFO  c.aardizio.SpringReactiveApplication  - Started SpringReactiveApplication in 34.788 seconds (JVM running for 253.624)
+16:58:36.962 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener  - Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   LogFileWebEndpointAutoConfiguration#logFileWebEndpoint matched:
+      - Log File found logging.file server.log (LogFileWebEndpointAutoConfiguration.LogFileCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.boot.actuate.logging.LogFileWebEndpoint; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+16:58:54.305 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]  - Initializing Spring FrameworkServlet 'dispatcherServlet'
+16:58:54.305 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet  - FrameworkServlet 'dispatcherServlet': initialization started
+16:58:54.308 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet  - FrameworkServlet 'dispatcherServlet': initialization completed in 3 ms
+16:58:54.328 [cluster-nio-worker-1] TRACE c.d.driver.core.QueryLogger.NORMAL  - [cluster] [localhost/127.0.0.1:9042] Query completed normally, took 3 ms: SELECT * FROM hotels WHERE uuid=?;
+16:59:00.949 [http-nio-8080-exec-3] INFO  c.aardizio.resource.HotelController  - deleting a journal
+16:59:37.228 [Thread-32] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext  - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5d9e494c: startup date [Tue May 22 16:58:02 CEST 2018]; root of context hierarchy
+16:59:37.230 [Thread-32] INFO  o.s.c.s.DefaultLifecycleProcessor  - Stopping beans in phase 2147483547
+16:59:37.231 [Thread-32] INFO  o.s.c.s.DefaultLifecycleProcessor  - Stopping beans in phase 0
+16:59:37.232 [Thread-32] INFO  o.s.j.e.a.AnnotationMBeanExporter  - Unregistering JMX-exposed beans on shutdown
