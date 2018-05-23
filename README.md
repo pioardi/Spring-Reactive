@@ -4,7 +4,7 @@ SpringBoot2 + Spring web flux + reactive cassandra + reactive kafka.
 
 Reference implementation for :
 
-Reactive Cassandra \n
-Spring boot dev tools \n
-Cassandra configuration ( retries , consistency level , etc ) \n
-Spring Web Flux \n
+Reactive Cassandra  <br />
+Spring boot dev tools  <br />
+Cassandra configuration ( retries , consistency level , etc )  <br />
+Spring Web Flux  <br />
