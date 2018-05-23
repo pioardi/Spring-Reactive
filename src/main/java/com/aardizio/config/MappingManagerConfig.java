@@ -17,6 +17,6 @@ public class MappingManagerConfig {
     @Bean
     public MappingManager mappingManager(Session session) {
         return new MappingManager(session);
-    }
+    }  
 
 }
