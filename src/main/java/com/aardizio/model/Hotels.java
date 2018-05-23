@@ -74,4 +74,12 @@ public class Hotels {
 		this.pois = pointsOfInterest;
 	}
 
+	public void setUuid(String uuid){
+		this.uuid = uuid;
+	}
+
+	public String getUuid(){
+		return uuid;
+	}
+
 }
