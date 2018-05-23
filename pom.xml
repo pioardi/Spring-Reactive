@@ -39,11 +39,11 @@
           		 </exclusion>
         	</exclusions>
 		</dependency>
-		 <dependency>
+		<dependency>
             <groupId>com.datastax.cassandra</groupId>
             <artifactId>dse-driver</artifactId>
             <version>${dse-driver.version}</version>
-        </dependency>
+       	</dependency>
 
 
 		<dependency>
