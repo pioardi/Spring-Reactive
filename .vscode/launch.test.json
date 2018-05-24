@@ -1,0 +1,28 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "Spring-Reactive",
+                "projectName": "Spring-Reactive",
+                "workingDirectory": "c:\\gitSTP\\Spring-Reactive",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "Spring-Reactive",
+                "projectName": "Spring-Reactive",
+                "workingDirectory": "c:\\gitSTP\\Spring-Reactive",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
