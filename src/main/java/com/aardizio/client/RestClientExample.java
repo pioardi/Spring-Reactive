@@ -20,7 +20,8 @@ public class RestClientExample {
         WebClient client = WebClient.create("http://microservice");
         Flux<Hotels> hotels = client.get().uri("/hotels").accept(MediaType.APPLICATION_JSON).retrieve()
                 .onStatus(HttpStatus::is4xxClientError, RestClientErrorHandler::handle)
-                .onStatus(HttpStatus::is5xxServerError, RestClientErrorHandler::handle).bodyToFlux(Hotels.class);
+                .onStatus(HttpStatus::is5xxServerError, RestClientErrorHandler::handle)
+                .bodyToFlux(Hotels.class);
         return hotels;
     }
 
