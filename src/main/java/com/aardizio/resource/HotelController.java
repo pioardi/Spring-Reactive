@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import brave.Tracer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -34,6 +35,9 @@ public class HotelController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HotelController.class);
 
 	@Autowired
+	private Tracer tracer;
+
+	@Autowired
 	private ReactiveHotelRepository hotelRepo;
 
 	@Autowired
@@ -42,6 +46,7 @@ public class HotelController {
 	@DeleteMapping(value = "/hotels/{id}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public Mono<Hotels> delete(@PathVariable String id) {
+		tracer.currentSpan().tag("hotelid", id);
 		LOGGER.info("deleting a journal");
 		return hotelRepo.deleteByUuid(id);
 	}
@@ -49,6 +54,7 @@ public class HotelController {
 	@PostMapping(value = "/hotels", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody Mono<Hotels> create(@RequestBody Hotels hotel) {
+		tracer.currentSpan().tag("hotelid", hotel.getId());
 		LOGGER.info("creating a journal 1");
 		return hotelRepo.save(hotel);
 	}
@@ -56,6 +62,8 @@ public class HotelController {
 	@GetMapping(value = "/hotels/{uuid}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public Mono<Hotels> search(@PathVariable String uuid) {
+		tracer.currentSpan().tag("hotelid", uuid);
+		LOGGER.info("Search gas");
 		return hotelRepo.findByUuid(uuid);
 	}
 

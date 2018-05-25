@@ -3,6 +3,8 @@ package com.aardizio.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import brave.Tracer;
+import brave.Tracing;
 import brave.sampler.Sampler;
 
 
@@ -14,6 +16,6 @@ import brave.sampler.Sampler;
 @Configuration
 public class TracingConfig {
 
-   
+  
 
 }
