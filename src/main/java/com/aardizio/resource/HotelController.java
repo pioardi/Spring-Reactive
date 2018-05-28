@@ -7,6 +7,7 @@ import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.policies.DowngradingConsistencyRetryPolicy;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import brave.Tracer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.kafka.sender.KafkaSender;
+import reactor.kafka.sender.SenderRecord;
 
 /**
  * Rest controller for a reactive web server.
@@ -33,6 +36,9 @@ import reactor.core.publisher.Mono;
 public class HotelController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HotelController.class);
+
+	@Autowired
+	private KafkaSender<String,String> hotelSender;
 
 	@Autowired
 	private Tracer tracer;
@@ -56,6 +62,15 @@ public class HotelController {
 	public @ResponseBody Mono<Hotels> create(@RequestBody Hotels hotel) {
 		tracer.currentSpan().tag("hotelid", hotel.getId());
 		LOGGER.info("creating a journal 1");
+		
+		ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getId(), hotel.toString());
+		Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
+
+		hotelSender.send(mono)
+				   .doOnError(e -> LOGGER.error(e.toString()))
+				   .doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString()))
+				   .subscribe();
+		
 		return hotelRepo.save(hotel);
 	}
 
