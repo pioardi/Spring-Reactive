@@ -72,7 +72,8 @@ public class HotelController {
 				 .and(hotelSender.send(mono)
 								 .doOnError(e -> LOGGER.error(e.toString()))
 								 .doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString())))
-				 .map(v -> hotel);
+				 .map(v -> hotel)
+				 .doOnError(e -> LOGGER.error("Error during hotel creation {}" , e));
 						
 	}
 
