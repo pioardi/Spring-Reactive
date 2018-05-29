@@ -69,7 +69,6 @@ public class HotelController {
 		
 		return hotelRepo.save(hotel)
 				 .then()
-				 .then()
 				 .and(hotelSender.send(mono)
 								 .doOnError(e -> LOGGER.error(e.toString()))
 								 .doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString())))
