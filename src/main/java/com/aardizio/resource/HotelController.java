@@ -66,12 +66,15 @@ public class HotelController {
 		ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getId(), hotel.toString());
 		Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
 
-		hotelSender.send(mono)
-				   .doOnError(e -> LOGGER.error(e.toString()))
-				   .doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString()))
-				   .subscribe();
 		
-		return hotelRepo.save(hotel);
+		hotelRepo.save(hotel)
+				 .then()
+				 .then()
+				 .and(hotelSender.send(mono)
+								 .doOnError(e -> LOGGER.error(e.toString()))
+								 .doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString())))
+				 .map(v -> hotel);
+						
 	}
 
 	@GetMapping(value = "/hotels/{uuid}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
