@@ -67,7 +67,7 @@ public class HotelController {
 		Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
 
 		
-		hotelRepo.save(hotel)
+		return hotelRepo.save(hotel)
 				 .then()
 				 .then()
 				 .and(hotelSender.send(mono)
