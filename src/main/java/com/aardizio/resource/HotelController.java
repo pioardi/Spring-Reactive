@@ -11,6 +11,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.cassandra.core.ReactiveCassandraTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +39,7 @@ public class HotelController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HotelController.class);
 
 	@Autowired
+	@Qualifier("simpleProducer")
 	private KafkaSender<String,String> hotelSender;
 
 	@Autowired
@@ -65,15 +67,14 @@ public class HotelController {
 		
 		ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getId(), hotel.toString());
 		Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
-
 		
 		return hotelRepo.save(hotel)
-				 .then()
-				 .and(hotelSender.send(mono)
-								 .doOnError(e -> LOGGER.error(e.toString()))
-								 .doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString())))
-				 .map(v -> hotel)
-				 .doOnError(e -> LOGGER.error("Error during hotel creation {}" , e));
+						.then()
+						.and(hotelSender.send(mono)
+										.doOnError(e -> LOGGER.error(e.toString()))
+										.doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString())))
+						.map(v -> hotel)
+						.doOnError(e -> LOGGER.error("Error during hotel creation {}" , e));
 						
 	}
 
