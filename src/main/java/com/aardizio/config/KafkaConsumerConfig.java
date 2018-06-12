@@ -37,10 +37,6 @@ public class KafkaConsumerConfig {
         ReceiverOptions<String, String> receiverOptions = ReceiverOptions.<String, String>create(consumerProps)
                 .subscription(Collections.singleton("prova"));
         KafkaReceiver<String,String> receiver =   KafkaReceiver.create(receiverOptions);
-        receiver.receive().subscribe(r -> {
-                System.out.printf("Received message: %s\n", r);           
-                r.receiverOffset().acknowledge();
-        }); 
         return receiver;
     }
 
