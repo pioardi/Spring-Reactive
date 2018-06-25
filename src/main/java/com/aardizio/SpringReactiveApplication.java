@@ -18,7 +18,7 @@ public class SpringReactiveApplication implements ApplicationListener<Applicatio
 
 	@Qualifier("simpleConsumer")
 	@Autowired
-	private KafkaReceiver<String,String> receiver;
+	private KafkaReceiver<String,String> receiver; 
 
 
 	public static void main(String[] args) {

@@ -65,18 +65,17 @@ public class HotelController {
 		tracer.currentSpan().tag("hotelid", hotel.getId());
 		LOGGER.info("creating a journal 1");
 		
-		ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getId(), hotel.toString());
-		Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
-		
-		return hotelRepo.save(hotel)
-						.then()
-						.and(hotelSender.send(mono)
-										.doOnError(e -> LOGGER.error(e.toString()))
-										.doOnNext(m -> LOGGER.info("Produced event : {}" , m.toString())))
-						.map(v -> hotel)
-						.doOnError(e -> LOGGER.error("Error during hotel creation {}" , e));
+		return  hotelRepo.save(hotel)
+			             .flatMapMany(h -> {
+					      	ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getId(), hotel.toString());
+					    	Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
+					    	return hotelSender.send(mono);
+						 })
+						.collectList()
+				 		.flatMap(m -> Mono.just(hotel));
 						
 	}
+
 
 	@GetMapping(value = "/hotels/{uuid}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
