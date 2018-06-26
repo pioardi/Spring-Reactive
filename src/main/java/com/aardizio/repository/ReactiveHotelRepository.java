@@ -12,7 +12,7 @@ import com.aardizio.model.*;
  * 
  * @author Alessandro Pio Ardizio
  */
-public interface ReactiveHotelRepository extends ReactiveCrudRepository<Hotels, String> {
+public interface ReactiveHotelRepository extends ReactiveCrudRepository<Hotel, String> {
 
     /**
      * Derived query selecting by {@code lastname}.
@@ -20,12 +20,12 @@ public interface ReactiveHotelRepository extends ReactiveCrudRepository<Hotels, 
      * @param lastname
      * @return
      */
-    Mono<Hotels> findByUuid(String id);
+    Mono<Hotel> findByUuid(String id);
 
     /**
      * Delete by uuid.
      */
-    @Query("DELETE FROM HOTELS WHERE UUID=?0")
-    Mono<Hotels> deleteByUuid(String id);
+    @Query("DELETE FROM HOTEL WHERE UUID=?0")
+    Mono<Hotel> deleteByUuid(String id);
 
 }

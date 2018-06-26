@@ -1,12 +1,10 @@
 package com.aardizio.resource;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
-import com.aardizio.client.RestClientErrorHandler;
 import com.aardizio.client.RestClientExample;
-import com.aardizio.model.Hotels;
+import com.aardizio.model.Hotel;
 import com.aardizio.repository.ReactiveHotelRepository;
 import com.datastax.driver.core.ConsistencyLevel;
 import com.datastax.driver.core.Statement;
@@ -64,14 +62,14 @@ public class HotelController {
 
 	@GetMapping(value = "/clientExample", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 		MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody Flux<Hotels> clientExample() {
+	public @ResponseBody Flux<Hotel> clientExample() {
 		log.info("Client example start");
-		return hotelRestClient.send();
+		return hotelRestClient.getAllHotels();
 	}
 
 	@DeleteMapping(value = "/hotels/{id}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public Mono<Hotels> delete(@PathVariable String id) {
+	public Mono<Hotel> delete(@PathVariable String id) {
 		
 		tracer.currentSpan().tag("hotelid", id);
 		log.info("deleting a journal");
@@ -80,7 +78,7 @@ public class HotelController {
 
 	@PostMapping(value = "/hotels", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody Mono<Hotels> create(@RequestBody Hotels hotel) {
+	public @ResponseBody Mono<Hotel> create(@RequestBody Hotel hotel) {
 		tracer.currentSpan().tag("hotelid", hotel.getId());
 		log.info("creating a journal 1");
 		
@@ -98,7 +96,7 @@ public class HotelController {
 
 	@GetMapping(value = "/hotels/{uuid}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public Mono<Hotels> search(@PathVariable String uuid) {
+	public Mono<Hotel> search(@PathVariable String uuid) {
 		tracer.currentSpan().tag("hotelid", uuid);
 		log.info("Search gas");
 		return hotelRepo.findByUuid(uuid);
@@ -109,12 +107,12 @@ public class HotelController {
 	 */
 	@GetMapping(value = "/hotels", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public Mono<List<Hotels>> getAllRetryProof() {
+	public Mono<List<Hotel>> getAllRetryProof() {
 		Statement search = QueryBuilder.select()
-									   .from("hotels")
+									   .from("hotel")
 									   .setConsistencyLevel(ConsistencyLevel.THREE)
 									   .setRetryPolicy(DowngradingConsistencyRetryPolicy.INSTANCE);
-		return reactiveCassandraTemplate.select(search, Hotels.class).collectList();
+		return reactiveCassandraTemplate.select(search, Hotel.class).collectList();
 	}
 
 	@ExceptionHandler

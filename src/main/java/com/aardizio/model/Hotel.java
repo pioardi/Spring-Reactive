@@ -6,8 +6,8 @@ import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(keyspace = "hotel", name = "hotels")
-public class Hotels {
+@Table(keyspace = "hotel", name = "hotel")
+public class Hotel {
 
 	@PartitionKey
 	private String uuid;

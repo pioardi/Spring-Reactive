@@ -1,4 +1,4 @@
- CREATE TABLE hotel.hotels (
+ CREATE TABLE hotel.hotel (
         uuid text PRIMARY KEY,
         name text,
         phone text,

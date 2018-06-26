@@ -1,6 +1,6 @@
 package com.aardizio.client;
 
-import com.aardizio.model.Hotels;
+import com.aardizio.model.Hotel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,16 +25,16 @@ public class RestClientExample {
     @Qualifier("hotelWebClient")
     private WebClient hotelWebClient;
 
-    public Flux<Hotels> send() {
+    public Flux<Hotel> getAllHotels(){
 
-        Flux<Hotels> hotels = hotelWebClient.get()
+        Flux<Hotel> hotels = hotelWebClient.get()
                                             .uri("/hotels")
                                             .accept(MediaType.APPLICATION_JSON)
                                             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
                                             .retrieve()
                                             .onStatus(HttpStatus::is4xxClientError, RestClientErrorHandler::handle)
                                             .onStatus(HttpStatus::is5xxServerError, RestClientErrorHandler::handle)
-                                            .bodyToFlux(Hotels.class);
+                                            .bodyToFlux(Hotel.class);
         return hotels;
     }
 
