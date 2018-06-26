@@ -16,9 +16,12 @@ public class RestClientErrorHandler {
     private static final Logger log = LoggerFactory.getLogger(RestClientExample.class);
 
     public static  Mono<Throwable> handle(ClientResponse cr){
-        log.error(cr.toString());
         // TODO do exception mapping here
-        return Mono.just(new RestClientException(cr.statusCode().toString() , "Message" ,cr.body(null)));
+        return Mono.just(new RestClientException(cr.statusCode().toString() , "Message" ,""));
+    }
+
+    public static  void handle(Throwable e){
+        log.error("{}",e);
     }
 
 }

@@ -1,5 +1,11 @@
 package com.aardizio.resource;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+
+import com.aardizio.client.RestClientErrorHandler;
+import com.aardizio.client.RestClientExample;
 import com.aardizio.model.Hotels;
 import com.aardizio.repository.ReactiveHotelRepository;
 import com.datastax.driver.core.ConsistencyLevel;
@@ -14,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.cassandra.core.ReactiveCassandraTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +44,7 @@ import reactor.kafka.sender.SenderRecord;
 @RestController
 public class HotelController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(HotelController.class);
+	private static final Logger log = LoggerFactory.getLogger(HotelController.class);
 
 	@Autowired
 	@Qualifier("simpleProducer")
@@ -51,11 +59,22 @@ public class HotelController {
 	@Autowired
 	private ReactiveCassandraTemplate reactiveCassandraTemplate;
 
+	@Autowired
+	private RestClientExample hotelRestClient;
+
+	@GetMapping(value = "/clientExample", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+		MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Flux<Hotels> clientExample() {
+		log.info("Client example start");
+		return hotelRestClient.send();
+	}
+
 	@DeleteMapping(value = "/hotels/{id}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public Mono<Hotels> delete(@PathVariable String id) {
+		
 		tracer.currentSpan().tag("hotelid", id);
-		LOGGER.info("deleting a journal");
+		log.info("deleting a journal");
 		return hotelRepo.deleteByUuid(id);
 	}
 
@@ -63,7 +82,7 @@ public class HotelController {
 			MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody Mono<Hotels> create(@RequestBody Hotels hotel) {
 		tracer.currentSpan().tag("hotelid", hotel.getId());
-		LOGGER.info("creating a journal 1");
+		log.info("creating a journal 1");
 		
 		return  hotelRepo.save(hotel)
 			             .flatMapMany(h -> {
@@ -81,21 +100,26 @@ public class HotelController {
 			MediaType.APPLICATION_JSON_VALUE })
 	public Mono<Hotels> search(@PathVariable String uuid) {
 		tracer.currentSpan().tag("hotelid", uuid);
-		LOGGER.info("Search gas");
+		log.info("Search gas");
 		return hotelRepo.findByUuid(uuid);
 	}
 
 	/**
 	 * Get all hotels and retry proof settings consistency level to THREE with one cassandra node .
 	 */
-	@GetMapping(value = "/hotels/", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+	@GetMapping(value = "/hotels", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public Flux<Hotels> getAllRetryProof() {
+	public Mono<List<Hotels>> getAllRetryProof() {
 		Statement search = QueryBuilder.select()
 									   .from("hotels")
 									   .setConsistencyLevel(ConsistencyLevel.THREE)
 									   .setRetryPolicy(DowngradingConsistencyRetryPolicy.INSTANCE);
-		return reactiveCassandraTemplate.select(search, Hotels.class);
+		return reactiveCassandraTemplate.select(search, Hotels.class).collectList();
 	}
+
+	@ExceptionHandler
+    public ResponseEntity<String> handle(IOException ex) {
+        return ResponseEntity.ok("");
+    }
 
 }
