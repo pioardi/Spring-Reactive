@@ -2,6 +2,11 @@ package com.aardizio.errors;
 
 import java.io.Serializable;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class RestClientException extends Exception implements Serializable{
 
     private static final long serialVersionUID = 1L ;
@@ -15,11 +20,4 @@ public class RestClientException extends Exception implements Serializable{
         this.infos = infos;
     }
 
-    public String getCode(){
-        return this.code;
-    }
-
-    public String getInfos(){
-        return this.infos;
-    }
 }
