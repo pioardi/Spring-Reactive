@@ -3,17 +3,7 @@ package com.aardizio.resource;
 import java.io.IOException;
 import java.util.List;
 
-import com.aardizio.client.RestClientExample;
-import com.aardizio.model.Hotel;
-import com.aardizio.repository.ReactiveHotelRepository;
-import com.datastax.driver.core.ConsistencyLevel;
-import com.datastax.driver.core.Statement;
-import com.datastax.driver.core.policies.DowngradingConsistencyRetryPolicy;
-import com.datastax.driver.core.querybuilder.QueryBuilder;
-
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.cassandra.core.ReactiveCassandraTemplate;
@@ -28,7 +18,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aardizio.client.RestClientExample;
+import com.aardizio.model.Hotel;
+import com.aardizio.repository.ReactiveHotelRepository;
+import com.datastax.driver.core.ConsistencyLevel;
+import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.policies.DowngradingConsistencyRetryPolicy;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
+
 import brave.Tracer;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
@@ -39,10 +38,10 @@ import reactor.kafka.sender.SenderRecord;
  * 
  * @author Alessandro Pio Ardizio.
  */
+@Slf4j
 @RestController
 public class HotelController {
 
-	private static final Logger log = LoggerFactory.getLogger(HotelController.class);
 
 	@Autowired
 	@Qualifier("simpleProducer")
@@ -79,12 +78,12 @@ public class HotelController {
 	@PostMapping(value = "/hotels", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody Mono<Hotel> create(@RequestBody Hotel hotel) {
-		tracer.currentSpan().tag("hotelid", hotel.getId());
+		tracer.currentSpan().tag("hotelid", hotel.getUuid());
 		log.info("creating a journal 1");
 		
 		return  hotelRepo.save(hotel)
 			             .flatMapMany(h -> {
-					      	ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getId(), hotel.toString());
+					      	ProducerRecord<String,String> record = new ProducerRecord<String,String>("prova", null, hotel.getUuid(), hotel.toString());
 					    	Mono<SenderRecord<String,String,String>> mono = Mono.just(SenderRecord.create(record, null));
 					    	return hotelSender.send(mono);
 						 })
