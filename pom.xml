@@ -26,6 +26,7 @@
 		<dse-driver.version>1.1.2</dse-driver.version>
 		<reactor.kafka.version>1.0.0.RELEASE</reactor.kafka.version>
 		<springfox.version>2.8.0</springfox.version>
+		<zalando.problem.version>0.22.0</zalando.problem.version>
 	</properties>
 
 	<dependencies>
@@ -141,11 +142,33 @@
           	    <groupId>io.kubernetes</groupId>
 			    <artifactId>client-java</artifactId>
           </dependency>
-		
+		  <!-- https://mvnrepository.com/artifact/org.zalando/problem -->
+		<dependency>
+				<groupId>org.zalando</groupId>
+				<artifactId>problem-spring-web</artifactId>
+				<version>${zalando.problem.version}</version>
+			</dependency>
 	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- https://mvnrepository.com/artifact/org.zalando/problem -->
+			<dependency>
+				<groupId>org.zalando</groupId>
+				<artifactId>problem</artifactId>
+    			<version>${zalando.problem.version}</version>
+			</dependency>
+			<dependency>
+    			<groupId>org.zalando</groupId>
+    			<artifactId>jackson-datatype-problem</artifactId>
+    			<version>${zalando.problem.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.zalando/problem-spring-web -->
+			<dependency>
+				<groupId>org.zalando</groupId>
+				<artifactId>problem-spring-web</artifactId>
+				<version>${zalando.problem.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-dependencies</artifactId>

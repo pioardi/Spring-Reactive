@@ -1,22 +1,9 @@
 package com.aardizio.config;
 
-import java.util.Properties;
-
-import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.Consumed;
-import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.Printed;
-import org.apache.kafka.streams.kstream.Produced;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Config class to build kafka streams.
@@ -31,7 +18,7 @@ public class KafkaStreamsConfig {
 	private KafkaProperties kafkaProperties;
 	
 	
-	@Bean("simpleStream")
+	/* @Bean("simpleStream")
 	public KafkaStreams simpleStream() {
 		
 		Properties props = new Properties();
@@ -47,6 +34,6 @@ public class KafkaStreamsConfig {
         upperCasedStream.print(Printed.<String, String>toSysOut().withLabel("Yelling App"));
         log.info("Requesting a simple kafka stream");
 		return new KafkaStreams(builder.build(),streamsConfig);
-	}
+	} */
 	
 }
